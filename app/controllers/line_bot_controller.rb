@@ -60,7 +60,7 @@ class LineBotController < ApplicationController
         }
       end
     end
-
+    # カルーセルコンテナの作成
     def set_carousel(hotels)
       bubbles = []
       hotels.each do |hotel|
@@ -69,6 +69,15 @@ class LineBotController < ApplicationController
       {
         type: 'carousel',
         contents: bubbles
+      }
+    end
+    # バブルコンテナの作成
+    def set_bubble(hotel)
+      {
+        type: 'bubble',
+        hero: set_hero(hotel),
+        body: set_body(hotel),
+        footer: set_footer(hotel)
       }
     end
 end
