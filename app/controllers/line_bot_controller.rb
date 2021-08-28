@@ -9,6 +9,14 @@ class LineBotController < ApplicationController
       return head :bad_request
     end
     events = client.parse_events_from(body)
+    events.each do |event|
+      case event
+      when Line::Bot::Event::Message
+        case event.type
+        when Line::Bot::Event::MessageType::Text
+        end
+      end
+    end
   end
 
   private
