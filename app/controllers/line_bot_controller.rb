@@ -80,4 +80,18 @@ class LineBotController < ApplicationController
         footer: set_footer(hotel)
       }
     end
+    # ヒーローブロックの作成
+    def set_hero(hotel)
+      {
+        type: 'image',
+        url: hotel['hotelImageUrl'],
+        size: 'full',
+        aspectRatio: '20:13',
+        aspectMode: 'cover',
+        action: {
+          type: 'uri',
+          uri:  hotel['hotelInformationUrl']
+        }
+      }
+    end
 end
