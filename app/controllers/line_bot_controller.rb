@@ -15,10 +15,7 @@ class LineBotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
+          message = search_and_create_message(event.message['text'])
           client.reply_message(event['replyToken'], message)
         end
       end
@@ -48,6 +45,9 @@ class LineBotController < ApplicationController
       response = http_client.get(url, query)
       response = JSON.parse(response.body)
 
+      if response.key?('error')
+        text = "この検索条件に該当する宿泊施設が見つかりませんでした。\n条件を変えて再検索してください。"
+      else
       text = ''
       response['hotels'].each do |hotel|
         text <<
@@ -55,5 +55,11 @@ class LineBotController < ApplicationController
           hotel[0]['hotelBasicInfo']['hotelInformationUrl'] + "\n" +
           "\n"
       end
+      end
+
+      message = {
+        type: 'text',
+        text: text
+      }
     end
 end
