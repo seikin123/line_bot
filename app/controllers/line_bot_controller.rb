@@ -47,5 +47,13 @@ class LineBotController < ApplicationController
       }
       response = http_client.get(url, query)
       response = JSON.parse(response.body)
+
+      text = ''
+      response['hotels'].each do |hotel|
+        text <<
+          hotel[0]['hotelBasicInfo']['hotelName'] + "\n" +
+          hotel[0]['hotelBasicInfo']['hotelInformationUrl'] + "\n" +
+          "\n"
+      end
     end
 end
