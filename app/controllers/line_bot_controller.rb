@@ -59,6 +59,16 @@ class LineBotController < ApplicationController
           contents: set_carousel(response['hotels'])
         }
       end
+    end
 
+    def set_carousel(hotels)
+      bubbles = []
+      hotels.each do |hotel|
+        bubbles.push set_bubble(hotel[0]['hotelBasicInfo'])
+      end
+      {
+        type: 'carousel',
+        contents: bubbles
+      }
     end
 end
