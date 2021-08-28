@@ -8,6 +8,7 @@ class LineBotController < ApplicationController
     unless client.validate_signature(body, signature)
       return head :bad_request
     end
+    # LINEアプリへ返信機能
     events = client.parse_events_from(body)
     events.each do |event|
       case event
